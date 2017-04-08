@@ -4,7 +4,15 @@
         "source": "C:\\Users\\Administrator\\Desktop\\TourHelper\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\back.png"
     },
     {
+        "merged": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\back.png",
+        "source": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\back.png"
+    },
+    {
         "merged": "C:\\Users\\Administrator\\Desktop\\TourHelper\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ptr_rotate_arrow.png",
         "source": "C:\\Users\\Administrator\\Desktop\\TourHelper\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ptr_rotate_arrow.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ptr_rotate_arrow.png",
+        "source": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ptr_rotate_arrow.png"
     }
 ]

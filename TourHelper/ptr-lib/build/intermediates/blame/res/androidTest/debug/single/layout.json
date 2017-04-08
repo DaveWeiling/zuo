@@ -1,5 +1,13 @@
 [
     {
+        "merged": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_simple_loading.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_simple_loading.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_classic_default_header.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\zuo\\zuo\\TourHelper\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_classic_default_header.xml"
+    },
+    {
         "merged": "C:\\Users\\Administrator\\Desktop\\TourHelper\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_classic_default_header.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\TourHelper\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_classic_default_header.xml"
     },
