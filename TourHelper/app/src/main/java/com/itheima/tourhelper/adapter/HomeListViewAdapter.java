@@ -79,9 +79,15 @@ public class HomeListViewAdapter extends BaseAdapter {
             tourSite.setText(bean.getTourSite());
             imageView.setImageResource(ids[bean.getImage()]);
             tourNum.setText("已有" + bean.getTourNum() + "人去过");
-            tourLineNum.setText("已有" + bean.getTourLineNum() + "人正在排队");
+            int tourLineNum = bean.getTourLineNum();
+            if (tourLineNum != 0) {
+                this.tourLineNum.setText("已有" + tourLineNum + "人正在排队");
+            } else {
+                this.tourLineNum.setText("当前无人排队");
+            }
+
             String a = null;
-            switch (bean.getStar()){
+            switch (bean.getStar()) {
                 case 0:
                     a = "A";
                     break;
@@ -98,7 +104,7 @@ public class HomeListViewAdapter extends BaseAdapter {
                     a = "AAAAA";
                     break;
             }
-            star.setText("国家" + a +"级风景区");
+            star.setText("国家" + a + "级风景区");
         }
     }
 }

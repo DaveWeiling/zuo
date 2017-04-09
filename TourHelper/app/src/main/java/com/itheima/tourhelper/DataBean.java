@@ -18,6 +18,26 @@ public class DataBean implements Parcelable {
     int star;
     int image;
 
+    public void setTourSite(String tourSite) {
+        this.tourSite = tourSite;
+    }
+
+    public void setTourNum(int tourNum) {
+        this.tourNum = tourNum;
+    }
+
+    public void setTourLineNum(int tourLineNum) {
+        this.tourLineNum = tourLineNum;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "DataBean{" +

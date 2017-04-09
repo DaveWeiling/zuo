@@ -24,6 +24,7 @@ import com.itheima.tourhelper.adapter.PagerSelectedAdapter;
 import com.itheima.tourhelper.adapter.ShouYePagerAdapter;
 import com.itheima.tourhelper.ui.activity.TourDetailActivity;
 import com.itheima.tourhelper.utils.CommentUtils;
+import com.itheima.tourhelper.utils.TimerHandler;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShouyeFragment extends BaseFragment {
+public class ShouyeFragment extends BaseFragment implements TimerHandler.TimeCallback {
 
 
     int[] ids = {R.drawable.site1, R.drawable.site2, R.drawable.site3, R.drawable.site4,
@@ -48,14 +49,24 @@ public class ShouyeFragment extends BaseFragment {
     ViewPager vpTour;
     LinearLayout llPointContainer;
 
+    TimerHandler mTimerHandler;
+
     private int[] pagerPics = {R.drawable.p1, R.drawable.p2, R.drawable.p3, R.drawable.p4};
     private int prePostion = 0;
 
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            vpTour.setCurrentItem(vpTour.getCurrentItem() + 1);
-            handler.sendEmptyMessageDelayed(0, 3000);
+            switch (msg.what) {
+                case 0:
+                    vpTour.setCurrentItem(vpTour.getCurrentItem() + 1);
+                    handler.sendEmptyMessageDelayed(0, 3000);
+                    break;
+                case 1:
+                    onTimeUp(0);
+                    handler.sendEmptyMessageDelayed(1, 3000);
+                    break;
+            }
         }
     };
     private View mHeaderView;
@@ -70,6 +81,7 @@ public class ShouyeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_shouye, container, false);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptr);
 
+        mTimerHandler = new TimerHandler(this);
         MainActivity ac = (MainActivity) getActivity();
         mList = ac.mList;
 
@@ -103,7 +115,6 @@ public class ShouyeFragment extends BaseFragment {
         return view;
     }
 
-    public boolean isAdded = false;
 
     private void initHeaderView() {
         mHeaderView = View.inflate(getContext(), R.layout.layout_con, null);
@@ -126,7 +137,6 @@ public class ShouyeFragment extends BaseFragment {
         initHeaderView();
 
         initLlPoint(pagerPics.length, llPointContainer);
-        handler.sendEmptyMessageDelayed(0, 3000);
         rvShouye.addHeaderView(mHeaderView);
 
         //填充RecycleView布局
@@ -140,23 +150,41 @@ public class ShouyeFragment extends BaseFragment {
                 Toast.makeText(getContext(), bean.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), TourDetailActivity.class);
                 intent.putExtra("DATABEAN", bean);
-                startActivity(intent);
+                intent.putExtra("POSITION", truePosition);
+                ShouyeFragment.this.startActivityForResult(intent, 1);
             }
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.sendEmptyMessageDelayed(0, 3000);
+        handler.sendEmptyMessageDelayed(1, 3000);
+    }
 
     @Override
     public void onPause() {
         super.onPause();
-        handler.removeMessages(0);
+        handler.removeCallbacksAndMessages(null);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        isAdded = false;
         mList = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) {
+            if (data == null) return;
+            DataBean result = data.getParcelableExtra("RESULT");
+            int p = data.getIntExtra("POSITION", -1);
+            mList.get(p).setTourLineNum(result.getTourLineNum());
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initLlPoint(int size, LinearLayout ll) {
@@ -174,5 +202,18 @@ public class ShouyeFragment extends BaseFragment {
             v.setLayoutParams(params);
             ll.addView(v);
         }
+    }
+
+    @Override
+    public void onTimeUp(int count) {
+        for (DataBean bean : mList) {
+            int i = bean.getTourLineNum();
+            if (i > 0) {
+                i = i - 1;
+                bean.setTourLineNum(i);
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 }

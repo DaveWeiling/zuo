@@ -7,25 +7,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.itheima.tourhelper.utils.TimerHandler;
 import com.itheima.tourhelper.utils.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Administrator on 2017/1/15.
  */
-public class BaseActivity extends AppCompatActivity implements TimerHandler.TimeCallback {
+public class BaseActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private SharedPreferences mSharedPreferences;
 
-    private TimerHandler mTimerHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mProgressDialog = new ProgressDialog(this);
         mSharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
-        mTimerHandler = new TimerHandler(this);
         //Log.i("ddfdd", "onCreate: "+getClass().getSimpleName());
     }
 
@@ -75,16 +72,5 @@ public class BaseActivity extends AppCompatActivity implements TimerHandler.Time
         ToastUtils.showToast(this, msg);
     }
 
-    @Override
-    public void onTimeUp(int count) {
 
-    }
-
-    public void startTimeJob(int time) {
-        mTimerHandler.sendEmptyMessageDelayed(time, time);
-    }
-
-    public void stopTimeJob() {
-        mTimerHandler.removeCallbacksAndMessages(null);
-    }
 }

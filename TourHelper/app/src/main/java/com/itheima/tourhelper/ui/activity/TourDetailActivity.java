@@ -2,6 +2,8 @@ package com.itheima.tourhelper.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,7 +19,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class TourDetailActivity extends AppCompatActivity {
 
@@ -41,6 +42,22 @@ public class TourDetailActivity extends AppCompatActivity {
 
     List<String> knows = new ArrayList<>();
 
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int tourLineNum = mDatabean.getTourLineNum();
+            if (tourLineNum > 0) {
+                tourLineNum = tourLineNum - 1;
+                mDatabean.setTourLineNum(tourLineNum);
+            }
+            mTv.setText(tourLineNum + "");
+            mHandler.sendEmptyMessageDelayed(0, 3000);
+        }
+    };
+    private DataBean mDatabean;
+    private TextView mTv;
+    private int mPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +65,14 @@ public class TourDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tour_detail);
         ButterKnife.bind(this);
 
+        mTv = (TextView) findViewById(R.id.tv_tourlinenum);
+
         initAbouts();
         initKnows();
         Intent intent = getIntent();
-        DataBean databean = intent.getParcelableExtra("DATABEAN");
-        mTvTitle.setText(databean.getTourSite());
+        mDatabean = intent.getParcelableExtra("DATABEAN");
+        mPosition = intent.getIntExtra("POSITION", -1);
+        mTvTitle.setText(mDatabean.getTourSite());
         mPhone.setText("联系电话" + 12345555);
         mTvAbout.setText(abouts.get(0));
         mTvKnow.setText(knows.get(0));
@@ -62,6 +82,32 @@ public class TourDetailActivity extends AppCompatActivity {
                 Toast.makeText(TourDetailActivity.this, "加入排队", Toast.LENGTH_SHORT).show();
             }
         });
+        mTv.setText(mDatabean.getTourLineNum() + "");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mHandler.sendEmptyMessageDelayed(0, 3000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mPosition != -1) {
+            Intent data = new Intent();
+            data.putExtra("RESULT",mDatabean);
+            data.putExtra("POSITION",mPosition);
+            setResult(0,data);
+        }
+        finish();
+
     }
 
     private void initKnows() {
@@ -105,7 +151,4 @@ public class TourDetailActivity extends AppCompatActivity {
                 "巨石覆盖，后侧露出一片天光。洞中清爽幽静，洞外竹涛阵阵，真是读书之地。");
     }
 
-    @OnClick(R.id.join)
-    public void onClick() {
-    }
 }
